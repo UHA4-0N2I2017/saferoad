@@ -3,7 +3,8 @@
 return [
     'GET' => [
         '/' => "home#index",
-        '/error' => "error#index"
+        '/error' => "error#index",
+        '/warning' => "Warning#index"
     ],
     'POST' => [
 

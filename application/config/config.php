@@ -54,7 +54,7 @@ define('URL', str_replace('\\', '/', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER)
  * This is the place where you define your database credentials, database type etc.
  */
 define('DB_TYPE', 'mysql');
-define('DB_HOST', '127.0.0.1');
+define('DB_HOST', 'localhost:3306');
 define('DB_NAME', 'saferoad');
 define('DB_USER', 'root');
 define('DB_PASS', '');

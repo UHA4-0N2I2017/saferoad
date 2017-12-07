@@ -15,9 +15,16 @@ use Mini\Core\Controller;
 class JeuxController extends Controller
 {
 
-    public function jeux()
+    public function jeuxAcceuil()
     {
         $this->display('jeux/acceuil.html.twig', array(
+            'URL' => URL
+        ));
+    }
+
+    public function jeuxJeux()
+    {
+        $this->display('jeux/jeux.html.twig', array(
             'URL' => URL
         ));
     }

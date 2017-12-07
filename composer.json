@@ -1,0 +1,30 @@
+{
+  "name": "vfrz/mini4",
+  "description": "MINI4 - an extremely simple naked PHP application",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Panique",
+      "email": "panique@firemail.de"
+    },
+    {
+      "name": "John Dias",
+      "email": "joaodias@noctus.org"
+    },
+    {
+      "name": "Valentin Fritz",
+      "email": "contact@vfrz.fr"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "phroute/phroute": "~2.1.0",
+    "twig/twig": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mini\\": "application/"
+    }
+  }
+}

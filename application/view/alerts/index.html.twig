@@ -1,0 +1,67 @@
+{{ include('_templates/header.html.twig') }}
+
+<br/>
+
+<div class="container">
+
+    <h1>Alerter les secours</h1>
+
+    <p id="street"></p>
+
+    <div id="map">
+
+    </div>
+
+</div>
+
+{{ include('_templates/footer.html.twig') }}
+
+<script>
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+
+    function showPosition(position) {
+        if(position.coords.latitude && position.coords.longitude){
+            $.ajax({
+                type: "POST",
+                url: "api/geocode",
+                data: {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                },
+                dataType: 'text',
+                success: function(data){
+
+                    console.log(data);
+
+                    $("#street").append("Votre rue : " + data);
+
+                    $("#map").append("<iframe width='600' height='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/place?key=AIzaSyDq5dRP3hB67l3cKab17pQy48ERlNQkcIc &center=" + position.coords.latitude + "," + position.coords.longitude +" allowfullscreen> </iframe>");
+
+                }
+            });
+        }
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                console.log("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                console.log("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                console.log("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                console.log("An unknown error occurred.");
+                break;
+        }
+    }
+
+</script>

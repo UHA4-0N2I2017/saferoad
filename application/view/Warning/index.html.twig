@@ -7,5 +7,25 @@
     <h2>You are in the View: application/view/Warning/index.html.twig (everything in the box comes from this file)</h2>
     <p>In a real application this could be the homepage.</p>
 </div>
+<div id="alert_bloc">
+</div>
+<script>
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(alert_message);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
 
+    function alert_message(position) {
+        var url = "api.openweathermap.org/data/2.5/weather?lat= "+ position.coords.latitude + "&lon= "+ position.coords.longitude +"&appid=0df7d7156c32637257c7576df848db7a";
+        console.log(url);
+        $.ajax({url: "api.openweathermap.org/data/2.5/weather?lat= "+ position.coords.latitude + "&lon= "+ position.coords.longitude +"&appid=0df7d7156c32637257c7576df848db7a",
+            success: function(result){
+                console.log(result)
+            }});
+        $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +  + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+            "        <span aria-hidden=\"true\">&times;</span>\n" +
+            "    </button>")
+    }
+</script>
 {{ include('_templates/footer.html.twig') }}

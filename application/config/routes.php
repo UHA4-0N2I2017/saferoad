@@ -8,7 +8,7 @@ return [
         '/personal' => "alerts#personal"
     ],
     'POST' => [
-
+        '/api/geocode' => "alerts#geocode"
     ]
 ];
 

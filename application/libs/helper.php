@@ -54,4 +54,16 @@ class Helper
         return $raw_sql;
     }
 
+    static public function geocode($lat, $long){
+
+        $json = file_get_contents('https://api.opencagedata.com/geocode/v1/json?q=' . $lat . '+' . $long . '&key=69fc752a69074fe0a11b7bc97eb2227d');
+        $obj = json_decode($json);
+        if($obj->status->code != 200){
+            return $obj->status->message;
+        }else {
+            return $obj->results[0]->formatted;
+        }
+
+    }
+
 }

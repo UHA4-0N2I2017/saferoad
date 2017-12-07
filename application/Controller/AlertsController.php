@@ -12,6 +12,7 @@
 namespace Mini\Controller;
 
 use Mini\Core\Controller;
+use Mini\Libs\Helper;
 
 class AlertsController extends Controller
 {
@@ -21,6 +22,15 @@ class AlertsController extends Controller
         $this->display('alerts/index.html.twig', array(
             'URL' => URL
         ));
+
+    }
+
+    public function geocode(){
+        if (isset($_POST["latitude"]) && isset($_POST["longitude"])) {
+            echo Helper::geocode($_POST["latitude"], $_POST["longitude"]);
+        }else{
+            echo "missing parameters";
+        }
     }
 
     public function personal() {

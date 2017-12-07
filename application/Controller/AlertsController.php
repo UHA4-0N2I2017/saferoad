@@ -23,4 +23,10 @@ class AlertsController extends Controller
         ));
     }
 
+    public function personal() {
+        $this->display('alerts/personal.html.twig', array(
+           'URL' => URL
+        ));
+    }
+
 }

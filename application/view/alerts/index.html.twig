@@ -4,13 +4,27 @@
 
 <div class="container">
 
-    <h1>Alerter les secours</h1>
+    <h2>Alerter les secours</h2>
+
+    <br/>
 
     <p id="street"></p>
 
-    <div id="map">
+    <br/>
+
+    <div id="map" class="embed-responsive embed-responsive-16by9">
 
     </div>
+
+    <br/>
+    <br/>
+
+    <ul class="list-group">
+        <a href="tel:17"><li class="list-group-item">Police : 17</li></a>
+        <a href="tel:15"><li class="list-group-item">SAMU : 15</li></a>
+        <a href="tel:18"><li class="list-group-item">Pompiers : 18</li></a>
+        <a href="tel:112"><li class="list-group-item">Numéro d'appel européen : 112</li></a>
+    </ul>
 
 </div>
 
@@ -38,9 +52,9 @@
 
                     console.log(data);
 
-                    $("#street").append("Votre rue : " + data);
+                    $("#street").append("Votre adresse : <b>" + data + "</b>");
 
-                    $("#map").append("<iframe width='600' height='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/place?key=AIzaSyDq5dRP3hB67l3cKab17pQy48ERlNQkcIc &center=" + position.coords.latitude + "," + position.coords.longitude +" allowfullscreen> </iframe>");
+                    $("#map").append("<iframe class=\"embed-responsive-item\" width=\"700\" height=\"350\" style=\"border:0\" src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyDq5dRP3hB67l3cKab17pQy48ERlNQkcIc&q=" + position.coords.latitude + "," + position.coords.longitude +"\" allowfullscreen> </iframe>");
 
                 }
             });

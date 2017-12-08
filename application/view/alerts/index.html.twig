@@ -8,6 +8,8 @@
 
     <br/>
 
+    <div class="alert alert-danger" role="alert" id="error" hidden></div>
+
     <p id="street"></p>
 
     <br/>
@@ -20,11 +22,13 @@
     <br/>
 
     <ul class="list-group">
-        <a href="tel:17"><li class="list-group-item">Police : 17</li></a>
-        <a href="tel:15"><li class="list-group-item">SAMU : 15</li></a>
-        <a href="tel:18"><li class="list-group-item">Pompiers : 18</li></a>
-        <a href="tel:112"><li class="list-group-item">Numéro d'appel européen : 112</li></a>
+        <li class="list-group-item"><a href="tel:17">Police : 17</a></li>
+        <li class="list-group-item"><a href="tel:15">SAMU : 15</a></li>
+        <li class="list-group-item"><a href="tel:18">Pompiers : 18</a></li>
+        <li class="list-group-item"><a href="tel:112">Numéro d'appel européen : 112</a></li>
     </ul>
+
+    <br/>
 
 </div>
 
@@ -35,7 +39,9 @@
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        console.log("Geolocation is not supported by this browser.");
+        $("#map").hide();
+        $("#error").append("La géolocalisation n'est pas disponible sur votre navigateur !");
+        $("#error").removeAttribute('hidden');
     }
 
     function showPosition(position) {
@@ -64,16 +70,22 @@
     function showError(error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                console.log("User denied the request for Geolocation.");
+                $("#map").hide();
+                $("#error").append("Vous n'avez pas autorisé la récupération de votre position");
+                $("#error").removeAttr('hidden');
                 break;
             case error.POSITION_UNAVAILABLE:
-                console.log("Location information is unavailable.");
+                $("#map").hide();
+                $("#error").append("Imposibble de trouver votre position");
+                $("#error").removeAttr('hidden');
                 break;
             case error.TIMEOUT:
                 console.log("The request to get user location timed out.");
                 break;
             case error.UNKNOWN_ERROR:
-                console.log("An unknown error occurred.");
+                $("#map").hide();
+                $("#error").append("Une erreur est survenue !");
+                $("#error").removeAttr('hidden');
                 break;
         }
     }

@@ -17,15 +17,23 @@
     }
 
     function alert_message(position) {
-        var url = "api.openweathermap.org/data/2.5/weather?lat= "+ position.coords.latitude + "&lon= "+ position.coords.longitude +"&appid=0df7d7156c32637257c7576df848db7a";
-        console.log(url);
-        $.ajax({url: "api.openweathermap.org/data/2.5/weather?lat= "+ position.coords.latitude + "&lon= "+ position.coords.longitude +"&appid=0df7d7156c32637257c7576df848db7a",
+        $.ajax({
+            type: "GET",
+            url: "https://api.openweathermap.org/data/2.5/weather?lat="+ position.coords.latitude + "&lon="+ position.coords.longitude +"&lang=fr&appid=9a082f99e2a2a8496598644aac3b7546",
             success: function(result){
-                console.log(result)
+                jsonWeatherRead(result);
             }});
-        $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +  + "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
-            "        <span aria-hidden=\"true\">&times;</span>\n" +
-            "    </button>")
+
+    }
+
+    function jsonWeatherRead(jsonObject) {
+        var weatherInfo = jsonObject.weather[0].description;
+        var temp = jsonObject.main.temp - 273.15;
+        temp = 2;
+        if ( temp < 3){
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Verglas : Conduis Prudemment </strong>(La température est de " + temp + "°C)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>")
+        }
+
     }
 </script>
 {{ include('_templates/footer.html.twig') }}

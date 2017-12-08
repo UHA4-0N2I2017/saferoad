@@ -11,29 +11,55 @@
 </div>
 <script>
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(alert_message);
+        navigator.geolocation.getCurrentPosition(ajaxRequestWeather);
     } else {
         console.log("Geolocation is not supported by this browser.");
     }
 
-    function alert_message(position) {
+    function ajaxRequestWeather(position) {
         $.ajax({
             type: "GET",
-            url: "https://api.openweathermap.org/data/2.5/weather?lat="+ position.coords.latitude + "&lon="+ position.coords.longitude +"&lang=fr&appid=9a082f99e2a2a8496598644aac3b7546",
-            success: function(result){
+            url: "https://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&lang=fr&appid=9a082f99e2a2a8496598644aac3b7546",
+            success: function (result) {
                 jsonWeatherRead(result);
-            }});
-
+            }
+        });
     }
 
     function jsonWeatherRead(jsonObject) {
-        var weatherInfo = jsonObject.weather[0].description;
-        var temp = jsonObject.main.temp - 273.15;
-        temp = 2;
-        if ( temp < 3){
-            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Verglas : Conduis Prudemment </strong>(La température est de " + temp + "°C)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>")
+
+        //alerte sur la vitesse du vent
+        var windSpeed = jsonObject.wind.speed * 3.6;
+        if (windSpeed >= 50 && windSpeed < 75) {
+            $("#alert_bloc").append("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Alerte Vent Modéré : Attention au rafale </strong>(La vent souffle à " + windSpeed + " km/h)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>");
+        }
+        if (windSpeed >= 75 && windSpeed < 100) {
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Vent Fort : Attention au rafale </strong>(La vent souffle à " + windSpeed + " km/h)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>");
+        }
+        if (windSpeed >= 100) {
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Avis de Tempêtes : Restez chez vous </strong>(La vent souffle à " + windSpeed + " km/h)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>");
         }
 
+        //alerte sur la température
+        var temp = jsonObject.main.temp - 273.15;
+        if (temp < 3) {
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Verglas : Conduisez Prudemment </strong>(La température est de " + temp + "°C)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>")
+        }
+        if (temp >= 35){
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Canicule : Conduisez Prudemment </strong>(La température est de " + temp + "°C)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>")
+        }
+
+        //alerte sur la pluie
+        if(jsonObject.rain){
+            var rain = jsonObject.rain.h3;
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte AquaPlanage : Conduisez Prudemment </strong>(il a plu " + rain + " m3)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>")
+        }
+
+        //alerte sur la neigelea
+        if(jsonObject.snow){
+            var snow = jsonObject.snow.h3;
+            $("#alert_bloc").append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Alerte Chute de neige : Conduisez Prudemment </strong>(il est tombé " + snow + " m3)<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n<span aria-hidden=\"true\">&times;</span>\n</button>")
+        }
     }
 </script>
 {{ include('_templates/footer.html.twig') }}

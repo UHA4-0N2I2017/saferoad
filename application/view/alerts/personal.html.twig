@@ -1,0 +1,115 @@
+{{ include('_templates/header.html.twig') }}
+
+<br/>
+
+<div class="container">
+    <h2>Données personnelles</h2>
+
+    <form id="form">
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="firstName">Prénom</label>
+                <input id="firstName" type="text" class="form-control save" placeholder="Prénom">
+            </div>
+            <div class="col">
+                <label for="lastName">Nom</label>
+                <input id="lastName" type="text" class="form-control save" placeholder="Nom">
+            </div>
+        </div>
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="age">Age</label>
+                <input type="text" class="form-control save" id="age" placeholder="Age">
+            </div>
+            <div class="col">
+                <label for="blood">Groupe sanguin</label>
+                <select class="form-control save" id="blood">
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="autres">Autres (antécédents médicaux, allergies...)</label>
+            <textarea id="autres" class="form-control save" rows="5"></textarea>
+        </div>
+        <hr/>
+        <h4>Personne(s) a contacter en cas d'urgence</h4>
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="name1">Nom, prénom</label>
+                <input id="name1" type="text" class="form-control save" placeholder="Nom, prénom">
+            </div>
+            <div class="col">
+                <label for="phone1">Numéro de téléphone</label>
+                <input id="phone1" type="text" class="form-control save" placeholder="Numéro de téléphone">
+            </div>
+        </div>
+        <div class="form-row form-group">
+            <div class="col">
+                <input id="name2" type="text" class="form-control save" placeholder="Nom, prénom">
+            </div>
+            <div class="col">
+                <input id="phone2" type="text" class="form-control save" placeholder="Numéro de téléphone">
+            </div>
+        </div>
+        <div class="form-row form-group">
+            <div class="col">
+                <input id="name3" type="text" class="form-control save" placeholder="Nom, prénom">
+            </div>
+            <div class="col">
+                <input id="phone3" type="text" class="form-control save" placeholder="Numéro de téléphone">
+            </div>
+        </div>
+        <div class="form-row form-group">
+            <div class="col">
+                <input id="name4" type="text" class="form-control save" placeholder="Nom, prénom">
+            </div>
+            <div class="col">
+                <input id="phone4" type="text" class="form-control save" placeholder="Numéro de téléphone">
+            </div>
+        </div>
+        <div class="form-row form-group">
+            <div class="col">
+                <input id="name5" type="text" class="form-control save" placeholder="Nom, prénom">
+            </div>
+            <div class="col">
+                <input id="phone5" type="text" class="form-control save" placeholder="Numéro de téléphone">
+            </div>
+        </div>
+
+        <button id="saveBtn" type="button" class="btn btn-primary">Sauvegarder</button>
+    </form>
+
+</div>
+
+
+{{ include('_templates/footer.html.twig') }}
+
+<script>
+
+    $(document).ready(function () {
+
+        $(".save").each(function () {
+            let e = $(this);
+            if (localStorage.getItem(e.attr("id")) !== null) {
+                e.val(localStorage.getItem(e.attr("id")));
+            }
+        });
+
+        $("#saveBtn").on("click", function () {
+            $(".save").each(function () {
+                let e = $(this);
+                localStorage.setItem(e.attr("id"), e.val());
+            });
+            swal("Succès !", "Informations enregistrées avec succès !", "success");
+        });
+    });
+
+</script>
